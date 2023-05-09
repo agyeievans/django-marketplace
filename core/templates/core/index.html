@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'core/base.html' %}
 
-    <script src="https:cdn.tailwind.css"></script>
-    <title>Puddle</title>
-</head>
-<body>
-    <div class="px-6 py-6">
-        <h1>The Front page</h1>
-    </div>
-</body>
-</html>
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+    <h1>The Front page</h1>
+{% endblock %}

@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https:cdn.tailwind.css"></script>
-    <title>Puddle</title>
+    <title>{% block title %}{% endblock %} | Puddle</title>
 </head>
 <body>
     <div class="px-6 py-6">
-        
+        {% block content %}
+        {% endblock %}
     </div>
 </body>
 </html>
