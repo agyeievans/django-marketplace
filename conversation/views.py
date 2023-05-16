@@ -14,9 +14,9 @@ def new_conversation(request, item_pk):
     # get all conversations connected to the item
     conversations = Conversation.objects.filter(item=item).filter(members__in=[request.user.id])
 
-    # check if the conversation already exists
+    # check if the conversation already exists and redirect to the conversation detail
     if conversations.exists():
-        pass # redirect to the conversation
+        return redirect('conversation:detail', pk=conversations.first().id)
 
     # check if form is submitted
     if request.method == 'POST':
@@ -74,5 +74,5 @@ def detail(request, pk):
             form = ConversationMessageForm()
 
     form = ConversationMessageForm()
-    
+
     return render(request, 'conversation/detail.html', {'conversation': conversation, 'form': form})
