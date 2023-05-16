@@ -21,7 +21,7 @@
                 <div class="mt-6 p-6 bg-white rounded-xl">
                     <p>This is your item</p>
 
-                    <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semi-bold bg-teal-500 rounded-xl text-white hover:bg-teal-700">Edit Item</a>
+                    <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semi-bold bg-teal-500 rounded-xl text-white hover:bg-teal-700">Edit Item</a>
                     <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semi-bold bg-red-500 rounded-xl text-white hover:bg-red-700">Delete Item</a>
                 </div>
             {% else %}
