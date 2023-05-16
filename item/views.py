@@ -3,8 +3,21 @@ from django.shortcuts import get_object_or_404
 from item.models import Item
 from django.contrib.auth.decorators import login_required
 from .forms import NewItemForm, EditItemForm
+# to search items in description
+from django.db.models import Q
 
-# Create your views here.
+# search items
+def items(request):
+    # get search query
+    query = request.GET.get('query', '')
+    # check if item is sold
+    items = Item.objects.filter(is_sold=False)
+
+    #  filter items by name and description
+    if query:
+        items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
+    return render(request, 'item/items.html', {'items': items, 'query': query, })
+
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
     # related items
