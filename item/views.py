@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from item.models import Item
+from item.models import Item, Category
 from django.contrib.auth.decorators import login_required
 from .forms import NewItemForm, EditItemForm
 # to search items in description
@@ -10,13 +10,21 @@ from django.db.models import Q
 def items(request):
     # get search query
     query = request.GET.get('query', '')
+    category_id = request.GET.get('category', 0)
+    # get all categories
+    categories = Category.objects.all()
     # check if item is sold
     items = Item.objects.filter(is_sold=False)
+
+    # filter items by category
+    if category_id:
+        items = items.filter(category_id=category_id)
 
     #  filter items by name and description
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
-    return render(request, 'item/items.html', {'items': items, 'query': query, })
+
+    return render(request, 'item/items.html', {'items': items, 'query': query, 'categories': categories, 'category_id': int(category_id)})
 
 def detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
