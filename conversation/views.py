@@ -56,4 +56,23 @@ def inbox(request):
 def detail(request, pk):
     conversation = Conversation.objects.filter(members__in=[request.user.id]).get(pk=pk)
 
-    return render(request, 'conversation/detail.html', {'conversation': conversation})
+    # check if form is submitted
+    if request.method == 'POST':
+        form = ConversationMessageForm(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # create a new message
+            conversation_message = form.save(commit=False)
+            conversation_message.conversation = conversation
+            conversation_message.created_by = request.user
+            conversation_message.save()
+
+            conversation.save()
+            return redirect('conversation:detail', pk=pk)
+        else:
+            form = ConversationMessageForm()
+
+    form = ConversationMessageForm()
+    
+    return render(request, 'conversation/detail.html', {'conversation': conversation, 'form': form})
